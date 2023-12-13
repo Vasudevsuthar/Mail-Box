@@ -1,0 +1,12 @@
+.home {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .home h2 {
+    font-size: 1.75rem;
+    margin: 0.5rem 0.5rem;
+  }

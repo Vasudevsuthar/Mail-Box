@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import classes from "./Singup.module.css";
+import { Link } from "react-router-dom";
 
 const Singup = () => {
   const emailInputRef = useRef();
@@ -100,9 +101,11 @@ const Singup = () => {
             SingUp
           </Button>
         </Form>
-        <Button className={classes.Button} variant="secondary" type="submit">
-          Have an account? Login here
-        </Button>
+        <p className={classes.Link}>
+        Have an account? <Link to='/login'>Login here</Link>
+        </p>
+         
+        
       </Card>
     </div>
   );
