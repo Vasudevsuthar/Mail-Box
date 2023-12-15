@@ -10,3 +10,13 @@
     font-size: 1.75rem;
     margin: 0.5rem 0.5rem;
   }
+
+  .home Button{
+    background-color: #66a2ca;
+    margin-right: 10px;
+    border: #fff;
+    }
+  
+  .home Button:hover{
+    background-color: #0c79c2;
+  }
