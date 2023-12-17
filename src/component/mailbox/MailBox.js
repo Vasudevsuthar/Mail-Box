@@ -20,19 +20,34 @@ const MailBox = ({ onClose }) => {
   }, [editorState]);
 
   const senderEmail = localStorage.getItem("email");
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    return `${day}/${month}/${year} (${hours}:${minutes}:${seconds})`;
+  };
+  const formattedDate = formatDate(new Date());
+
   const sendhandler = async () => {
     setLoading(true);
-    const changeSenderMail = senderEmail.replace(/[@.]/g, "");
-
+    const changedSenderMail = senderEmail.replace(/[@.]/g, "");
     const mailData = {
       to: to,
       subject: Subject,
       message: mailBody,
+      read: true,
+      time: formattedDate,
+      send: true,
+      receive: false,
     };
 
     try {
       const response = await fetch(
-        `https://mail-box-3b26e-default-rtdb.firebaseio.com//${changeSenderMail}SentMail.json`,
+        `https://mail-box-3b26e-default-rtdb.firebaseio.com/${changedSenderMail}SentMail.json`,
         {
           method: "POST",
           body: JSON.stringify(mailData),
@@ -41,21 +56,42 @@ const MailBox = ({ onClose }) => {
           },
         }
       );
-      if (response.ok) {
-        console.log("Mail sent successfully!");
-        alert("Mail sent successfully!");
-        setTo("");
-        setSubject("");
-        setEditorState(EditorState.createEmpty());
-      } else {
-        console.error("Failed to send mail");
-        alert("Failed to send mail");
-      }
+      let data = await response;
+      console.log(data);
     } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
+      console.log(err);
     }
+
+    try {
+      const mail = to.replace(/[@.]/g, "");
+      const response = await fetch(
+        `https://mail-box-3b26e-default-rtdb.firebaseio.com/${mail}inbox.json`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            from: senderEmail,
+            subject: Subject,
+            message: mailBody,
+            read: false,
+            time: formattedDate,
+            send: false,
+            receive: true,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      let data = await response;
+      console.log(data);
+      setLoading(false);
+    } catch (err) {
+      alert(err);
+    }
+
+    setTo("");
+    setSubject("");
+    setEditorState(EditorState.createEmpty());
   };
 
   return (

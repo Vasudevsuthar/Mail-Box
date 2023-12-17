@@ -1,0 +1,34 @@
+.custom-list-item {
+    background-color: #343a40; 
+    background-image: linear-gradient(180deg, #343a40 10%, #292c30 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+  
+  .custom-link {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  
+  .info-container {
+    flex: 1;
+  }
+  
+  .from {
+    font-weight: bold;
+  }
+  
+  .date-time{
+    text-align: left;
+  }
+  .subject {
+    color: #adb5bd; 
+  }
+  
+  
