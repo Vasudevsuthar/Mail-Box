@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { mailActions } from "../store/mailSlice";
 import { Link } from "react-router-dom";
 import "./inbox.css";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 
 const Inbox = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,6 +46,26 @@ const Inbox = ({ onClose }) => {
   useEffect(() => {
     getData();
   }, [getData]);
+
+  const DeleteHandler = async (id) => {
+    setIsLoading(true);
+    const mail = receivedData.filter((item) => item.id === id);
+    dispatch(mailActions.deleteMail(mail));
+    const res = await fetch(
+      `https://mail-box-3b26e-default-rtdb.firebaseio.com/${changedMail}inbox/${id}.json`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    let response = await res;
+    console.log(response);
+    getData();
+    setIsLoading(false);
+  };
 
   return (
     <>
@@ -93,6 +113,13 @@ const Inbox = ({ onClose }) => {
                     </span>
                   </div>
                 </Link>
+                <Button
+                    onClick={() => DeleteHandler(receivedData[email].id)}
+                    key={receivedData[email].id}
+                    style={{ float: "right" }}
+                    variant="danger">
+                    Delete
+                  </Button>
               </ListGroup.Item>
             ))}
         </ListGroup>

@@ -9,6 +9,7 @@ const mailSlice = createSlice({
       localStorage.getItem("email")?.replace(".", "")?.replace("@", "") || "",
     received: [],
     unreadMails: unreadMails ? unreadMails : 0,
+    trash: [],
   },
 
   reducers: {
@@ -21,6 +22,9 @@ const mailSlice = createSlice({
     unreadMessage(state, action) {
       state.unreadMails = action.payload;
     },
+    deleteMail(state, action){
+      state.trash.push(action.payload);
+    }
   },
 });
 
