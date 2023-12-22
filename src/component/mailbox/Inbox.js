@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import "./inbox.css";
 import { Card, Button } from "react-bootstrap";
 
-const Inbox = ({ onClose }) => {
+const Inbox = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const receivedData = useSelector((state) => state.email.received);
@@ -37,6 +37,7 @@ const Inbox = ({ onClose }) => {
         dispatch(mailActions.unreadMessage(unreadMails));
         setIsLoading(false);
       }
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
       setIsLoading(false);
@@ -45,6 +46,11 @@ const Inbox = ({ onClose }) => {
 
   useEffect(() => {
     getData();
+
+    const intervalId = setInterval(() => {
+      getData();
+    },2000);
+    return () => clearInterval(intervalId);
   }, [getData]);
 
   const DeleteHandler = async (id) => {
@@ -77,9 +83,7 @@ const Inbox = ({ onClose }) => {
               No Mails in Inbox!!
             </h5>
           )}
-          {isLoading && receivedData.length > 0 && (
-            <Spinner animation="border" variant="primary" />
-          )}
+         
 
           {!isLoading &&
             receivedData !== null &&
