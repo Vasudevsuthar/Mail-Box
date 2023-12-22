@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaBars, FaHome } from "react-icons/fa";
-import { AiOutlineInbox } from "react-icons/ai";
+import { AiOutlineInbox, AiOutlineSend } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import MailBox from "../mailbox/MailBox";
 import { FaPen } from "react-icons/fa";
@@ -34,13 +34,18 @@ const Sidebar = ({ children }) => {
       name: "Inbox",
       icon: <AiOutlineInbox />,
     },
+    {
+      path: "/sentMails",
+      name: "Sent-Box",
+      icon: <AiOutlineSend />,
+    },
   ];
   return (
     <div className="Container">
       <div style={{ width: isOpen ? "200px" : "50px" }} className="sidebar">
         <div className="top_section">
-          <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Logo</h1>
-          <div style={{marginLeft: isOpen ? "50px" : "0"}} className="bars">
+          <h1 style={{display: isOpen ? "block" : "none"}} className="logo">MailBox</h1>
+          <div style={{marginLeft: isOpen ? "30px" : "0"}} className="bars">
             <FaBars onClick={toggle} />
           </div>
         </div>

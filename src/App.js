@@ -7,6 +7,8 @@ import MailBox from "./component/mailbox/MailBox";
 import Inbox from "./component/mailbox/Inbox";
 import Sidebar from "./component/sidebar/Sidebar";
 import OpenMails from "./component/mailbox/OpenMail";
+import SentMails from './component/mailbox/SentMails';
+import OpenSentMails from './component/mailbox/OpenSentMails';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/mail" element={<MailBox />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/inbox/:id" element={<OpenMails />} />
+          <Route path="/sentMails" element={<SentMails />} />
+          <Route path="/sentMails/:id" element={<OpenSentMails />} />
         </Routes>
       </Sidebar>
     </Router>

@@ -13,7 +13,7 @@ const mailSlice = createSlice({
   },
 
   reducers: {
-    sendMail(state, action) {
+    sentMail(state, action) {
       state.sent = action.payload;
     },
     receivedMail(state, action) {
