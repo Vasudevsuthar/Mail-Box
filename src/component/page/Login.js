@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import classes from "./Login.module.css";
 import { authActions } from "../store/authSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +27,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBAYFEF5InzJ-FOrwWVY6_IJ3zMV_ne8Oc",
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCSirGHgd4mNFVTLhXNYB3wVv14HzBgj9Y",
         {
           method: "POST",
           body: JSON.stringify({
@@ -90,9 +90,9 @@ const Login = () => {
               Login
             </Button>
           </Form>
-          <Button className={classes.Button} variant="secondary" type="submit">
-            Don't have an account? Sing Up
-          </Button>
+          <p>
+            Don't have an account? <Link to={'/'}>Sing Up</Link>
+          </p>
         </Card>
       </div>
     </div>

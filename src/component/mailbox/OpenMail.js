@@ -1,28 +1,22 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
-
 import { useParams, useNavigate } from "react-router-dom";
-
 import { useSelector } from "react-redux";
 import { Card } from "react-bootstrap";
 
 const OpenMails = () => {
   const navigate = useNavigate();
-
   const { id } = useParams();
   const mails = useSelector((state) => state.email.received);
-
   const email = localStorage.getItem("email");
   const changedMail = email.replace(/[@.]/g, "");
-  console.log(changedMail);
   const selectedMail = mails.filter((item) => item.id === id);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const api = `https://mail-box-3b26e-default-rtdb.firebaseio.com/${changedMail}inbox/${id}.json`;
-        console.log(api);
+        const api = `https://mail-box-c03c2-default-rtdb.firebaseio.com/${changedMail}inbox/${id}.json`;
         const updatedData = {
           read: true,
         };
@@ -38,7 +32,6 @@ const OpenMails = () => {
         );
         if (response.ok) {
           const updatedItem = await response.json();
-          console.log("Updated item:", updatedItem);
         } else {
           console.error("Failed to update item:", response.status);
         }

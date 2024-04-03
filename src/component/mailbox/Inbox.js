@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import Spinner from "react-bootstrap/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { mailActions } from "../store/mailSlice";
 import { Link } from "react-router-dom";
@@ -20,12 +19,11 @@ const Inbox = () => {
     try {
       setIsLoading(true);
       let res = await fetch(
-        `https://mail-box-3b26e-default-rtdb.firebaseio.com/${changedMail}inbox.json`
+        `https://mail-box-c03c2-default-rtdb.firebaseio.com/${changedMail}inbox.json`
       );
       let data = await res.json();
       let arr = [];
       let unreadMails = 0;
-      console.log(data);
 
       for (let i in data) {
         if (data[i].read === false) {
@@ -49,7 +47,7 @@ const Inbox = () => {
 
     const intervalId = setInterval(() => {
       getData();
-    },2000);
+    },10000000);
     return () => clearInterval(intervalId);
   }, [getData]);
 
@@ -58,7 +56,7 @@ const Inbox = () => {
     const mail = receivedData.filter((item) => item.id === id);
     dispatch(mailActions.deleteMail(mail));
     const res = await fetch(
-      `https://mail-box-3b26e-default-rtdb.firebaseio.com/${changedMail}inbox/${id}.json`,
+      `https://mail-box-c03c2-default-rtdb.firebaseio.com/${changedMail}inbox/${id}.json`,
       {
         method: "DELETE",
         headers: {

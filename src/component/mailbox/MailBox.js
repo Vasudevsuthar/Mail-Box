@@ -47,7 +47,7 @@ const MailBox = ({ onClose }) => {
 
     try {
       const response = await fetch(
-        `https://mail-box-3b26e-default-rtdb.firebaseio.com/${changedSenderMail}SentMail.json`,
+        `https://mail-box-c03c2-default-rtdb.firebaseio.com/${changedSenderMail}SentMail.json`,
         {
           method: "POST",
           body: JSON.stringify(mailData),
@@ -65,7 +65,7 @@ const MailBox = ({ onClose }) => {
     try {
       const mail = to.replace(/[@.]/g, "");
       const response = await fetch(
-        `https://mail-box-3b26e-default-rtdb.firebaseio.com/${mail}inbox.json`,
+        `https://mail-box-c03c2-default-rtdb.firebaseio.com/${mail}inbox.json`,
         {
           method: "POST",
           body: JSON.stringify({

@@ -1,18 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
-
 import { useParams, useNavigate } from "react-router-dom";
-
 import { useSelector } from "react-redux";
 import { Card } from "react-bootstrap";
 
 const OpenSentMails = () => {
   const navigate = useNavigate();
-
   const { id } = useParams();
   const mails = useSelector((state) => state.email.sent);
-
   const selectedMail = mails.filter((item) => item.id === id);
 
   return (

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { FaBars, FaHome } from "react-icons/fa";
 import { AiOutlineInbox, AiOutlineSend } from "react-icons/ai";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import MailBox from "../mailbox/MailBox";
 import { FaPen } from "react-icons/fa";
 import "./Sidebar.css";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Badge from "react-bootstrap/Badge";
+import { authActions } from "../store/authSlice";
+import { useDispatch } from "react-redux";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,8 +19,9 @@ const Sidebar = ({ children }) => {
   const inboxMails = useSelector((state) => state.email.unreadMails);
   const sentBox = useSelector((state) => state.email.sent);
   const sentBoxMails = sentBox.length;
-  console.log(sentBoxMails);
-  console.log(mailCount);
+  const dispatch = useDispatch();
+  const nav = useNavigate()
+
 
   useEffect(() => {
     setMailCount(inboxMails);
@@ -35,6 +38,13 @@ const Sidebar = ({ children }) => {
 
   const handleCloseMailBox = () => {
     setShowMailBox(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(authActions.logout());
+    localStorage.setItem("email", null);
+    localStorage.setItem("token", null);
+    nav("/login");
   };
 
   const menuItems = [
@@ -74,31 +84,33 @@ const Sidebar = ({ children }) => {
         </Button>
         {menuItems.map((item, index) => (
           <NavLink
-            to={item.path}
-            key={index}
-            className="link"
-            activeClassName="active"
+          to={item.path}
+          key={index}
+          className="link"
+        >
+          <div className="icon">{item.icon}</div>
+          <div
+            style={{ display: isOpen ? "block" : "none" }}
+            className="link_text"
           >
-            <div className="icon">{item.icon}</div>
-            <div
-              style={{ display: isOpen ? "block" : "none" }}
-              className="link_text"
-            >
-              {item.name}
-            </div>
-            {location.pathname === "/inbox" && item.path === "/inbox" && (
-              <Badge pill bg="dark" style={{ display: isOpen ? "block" : "none" }}>
+            {item.name}
+          </div>
+          {location.pathname === "/inbox" && item.path === "/inbox" && (
+            <Badge pill bg="dark" style={{ display: isOpen ? "block" : "none" }}>
               {mailCount}
             </Badge>
-            )}
-            {location.pathname === "/sentMails" &&
-              item.path === "/sentMails" && (
-                <Badge pill bg="dark" style={{ display: isOpen ? "block" : "none" }}>
+          )}
+          {location.pathname === "/sentMails" &&
+            item.path === "/sentMails" && (
+              <Badge pill bg="dark" style={{ display: isOpen ? "block" : "none" }}>
                 {sentBoxMails}
               </Badge>
-              )}
-          </NavLink>
+            )}
+        </NavLink>
+        
         ))}
+        <Button style={{ display: isOpen ? "block" : "none", margin: "10px" }}
+          variant="outline-danger" onClick={handleLogout}>Logout</Button>
       </div>
       <main className="main">{children}</main>
       {showMailBox && <MailBox onClose={handleCloseMailBox} />}

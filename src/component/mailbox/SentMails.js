@@ -17,11 +17,10 @@ const SentMails = () => {
     try {
       setLoading(true);
       let res = await fetch(
-        `https://mail-box-3b26e-default-rtdb.firebaseio.com/${mail}SentMail.json`
+        `https://mail-box-c03c2-default-rtdb.firebaseio.com/${mail}SentMail.json`
       );
       let data = await res.json();
       let arr = [];
-      console.log(data);
 
       for (let key in data) {
         const id = key;

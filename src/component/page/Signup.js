@@ -9,10 +9,9 @@ const Singup = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
-
   const [isLoading, setIsLoading] = useState(false);
 
-  const submitHandler = (event) => {
+  const submitHandler = (event) => {  
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
@@ -27,7 +26,7 @@ const Singup = () => {
     setIsLoading(true);
 
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBAYFEF5InzJ-FOrwWVY6_IJ3zMV_ne8Oc",
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCSirGHgd4mNFVTLhXNYB3wVv14HzBgj9Y",
       {
         method: "POST",
         body: JSON.stringify({
@@ -53,8 +52,6 @@ const Singup = () => {
         }
       })
       .then((data) => {
-        console.log("Account created successfully");
-        console.log(data);
         alert("Account created successfully");
 
         emailInputRef.current.value = "";
@@ -101,7 +98,7 @@ const Singup = () => {
             SingUp
           </Button>
         </Form>
-        <p className={classes.Link}>
+        <p >
         Have an account? <Link to='/login'>Login here</Link>
         </p>
          
