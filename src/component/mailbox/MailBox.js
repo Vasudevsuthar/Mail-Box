@@ -57,7 +57,6 @@ const MailBox = ({ onClose }) => {
         }
       );
       let data = await response;
-      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -83,8 +82,8 @@ const MailBox = ({ onClose }) => {
         }
       );
       let data = await response;
-      console.log(data);
       setLoading(false);
+      window.location.reload();
     } catch (err) {
       alert(err);
     }
@@ -92,6 +91,7 @@ const MailBox = ({ onClose }) => {
     setTo("");
     setSubject("");
     setEditorState(EditorState.createEmpty());
+    
   };
 
   return (
